@@ -1,5 +1,4 @@
-extends CharacterBody3D
-
+class_name Player extends CharacterBody3D
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 5
@@ -12,6 +11,8 @@ var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var ray_origin := Vector3.ZERO
 var ray_target := Vector3.ZERO
+
+var look_at_direction := Vector3.ZERO
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -46,5 +47,7 @@ func update_look_direction() -> void:
 	var intersection : Dictionary = space_state.intersect_ray(query) 
 	if not intersection.is_empty():
 		var pos = intersection.get("position")
-		var look_pos = Vector3(pos.x, body.position.y, pos.z)
-		body.look_at(look_pos, Vector3.UP)
+		var look_pos: Vector3 = Vector3(pos.x, body.position.y, pos.z)
+		var lerp_dir = lerp(look_at_direction, look_pos, 0.05)
+		body.look_at(lerp_dir, Vector3.UP)
+		look_at_direction = lerp_dir
