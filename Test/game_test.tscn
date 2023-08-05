@@ -1,0 +1,57 @@
+[gd_scene load_steps=12 format=3 uid="uid://dvpa0io3hfawl"]
+
+[ext_resource type="Texture2D" uid="uid://5gvrf02kdwuv" path="res://Assets/Texture/Dark/texture_05.png" id="1_1pgna"]
+[ext_resource type="Texture2D" uid="uid://be6hb22bgjqx2" path="res://Assets/Texture/Red/texture_01.png" id="2_48r3o"]
+[ext_resource type="Texture2D" uid="uid://c7qwxraewqp00" path="res://Assets/Texture/Orange/texture_04.png" id="2_e1edo"]
+[ext_resource type="PackedScene" uid="uid://dck25qofjmmtc" path="res://Test/player.tscn" id="4_ajamo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ngce3"]
+albedo_texture = ExtResource("1_1pgna")
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_gqgtj"]
+size = Vector2(20, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j115c"]
+albedo_texture = ExtResource("2_e1edo")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_ncras"]
+size = Vector3(0.5, 4, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v0k4o"]
+albedo_texture = ExtResource("2_48r3o")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_fwxbo"]
+size = Vector3(4, 3, 1)
+
+[sub_resource type="Environment" id="Environment_i35wk"]
+
+[node name="GameTest" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_ngce3")
+mesh = SubResource("PlaneMesh_gqgtj")
+
+[node name="Wall" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.02023, 2, 0)
+material_override = SubResource("StandardMaterial3D_j115c")
+mesh = SubResource("BoxMesh_ncras")
+
+[node name="Box" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.50012, -7.04279)
+material_override = SubResource("StandardMaterial3D_v0k4o")
+mesh = SubResource("BoxMesh_fwxbo")
+
+[node name="Player" parent="." instance=ExtResource("4_ajamo")]
+collision_mask = 5
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.675217, 0.737619, 0, -0.737619, 0.675217, 0, 6.18063, 7.29531)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_i35wk")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.577045, 0.816712, 0, -0.816712, 0.577045, 0, 31.5408, 10.1435)
